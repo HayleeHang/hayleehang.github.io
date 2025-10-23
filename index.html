@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Congyu Hang</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // quick Tailwind customization for pink accents
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            acc: { DEFAULT: '#ec4899' } // pink-500
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React (CDN) + Babel for in-browser JSX -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 text-zinc-900">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const PERSONAL = {
+      name: "Congyu Hang",
+      email: "hangcong@uw.edu",
+      phone: "206-734-1514",
+      location: "Seattle, WA",
+      linkedin: "https://www.linkedin.com/in/congyu-hang-b51a15290/",
+      headshot: "/assets/profile.jpg", // ensure this file exists at /assets/profile.jpg
+    };
+
+    const EDUCATION = [
+      {
+        school: "University of Washington, Seattle",
+        dates: "Sep 2024 – Jun 2026",
+        degree: "Master of Science (Thesis) in Biostatistics",
+        gpa: "GPA: 3.86/4.00",
+        coursework: [
+          "Statistical Inference",
+          "Biostatistics I–II",
+          "Machine Learning for Health Data",
+          "Theory of Linear Models",
+          "Longitudinal and Multilevel Data",
+          "Survival Data Analysis in Epidemiology",
+          "Data Analysis Seminar",
+        ],
+      },
+      {
+        school: "University of Toronto, ON, Canada",
+        dates: "Sep 2020 – Jun 2024",
+        degree: "B.Sc., Specialist — Quantitative Finance",
+        gpa: "GPA: 3.96/4.00",
+        coursework: [
+          "Probability and Stochastic Processes",
+          "Time Series Analysis",
+          "Regression Analysis",
+          "Multivariate Analysis",
+          "Statistics and Finance I–II",
+          "Categorical Data Analysis",
+          "Survival Analysis",
+          "Financial Derivatives",
+          "Numerical Algorithms",
+          "Intro to ML and Data",
+        ],
+        honors: [
+          "Dean’s List (2021–2023)",
+          "Vincent Bladen In-course Scholarship (2023)",
+          "Sotherton Wadhams In-course Scholar (2023)",
+          "Joseph Alfred Whealy In-course Scholarship (2022)",
+          "A. D. Allen Memorial (In-course) Scholarship (2022)",
+        ],
+      },
+    ];
+
+    const WORKING_PAPERS = [
+      {
+        title: "BLNM for Allele-Specific Expression (ASE)",
+        authors: "Hang, C.*, Vogel, R., Ganapathy, K., Mohammadi, P.",
+        note: "Manuscript in preparation; target: Bioinformatics",
+        blurb:
+          "Introduces an overdispersed Bayesian Binomial–Logit–Normal Mixture (BLNM) model extending ANEVA/ANEVA-DOT to robustly infer ASE variance, model outliers via a Uniform component, and improve cis-regulatory effect estimation across GTEx tissues.",
+      },
+      {
+        title: "Association of Paid Family Leave Policy with Child Physical Abuse and Neglect",
+        authors: "Georges, E., Peng, J., Ye, T., Hang, C., Brown, E. C. B., Rowhani-Rahbar, A.",
+        note: "Manuscript in preparation; target: Pediatrics",
+        blurb:
+          "Evaluates the association between state Paid Family Leave policies and rates of physical abuse and neglect among infants ≤ 2 years using a weighted event-study design based on the Callaway–Sant’Anna difference-in-differences framework.",
+      },
+      {
+        title: "Paid Family Leave and Abusive Head Trauma (AHT) / Neglect (DiD Evaluation)",
+        authors: "Hang, C.*, Ye, T.",
+        note: "Manuscript in preparation",
+        blurb:
+          "Uses population-weighted event-study and Callaway–Sant’Anna DiD models to quantify the causal impact of Paid Family Leave on rates of abusive head trauma and neglect among one-year-olds, validated across 7 U.S. states.",
+      },
+    ];
+
+    const RESEARCH_PROJECTS = [
+      {
+        title: "BLNM for ASE — ANEVA/ANEVA-DOT Extensions",
+        role: "Research Assistant",
+        dates: "Dec 2024 – Present",
+        supervisors: ["Prof. Pejman Mohammadi (Pejlab), Seattle Children’s"],
+        img: "/assets/projects/blnm.png",
+        description: [
+          "Developed the blnm Python package implementing a Binomial–Logit–Normal framework for likelihoods and estimation.",
+          "Derived Uniform-augmented BLNM mixture to handle outliers; implemented closed-form M-steps and selection workflow.",
+          "Proposed clustering-based initializations to improve EM stability.",
+          "Evaluated robustness via extensive Monte Carlo experiments; applied to GTEx.",
+        ],
+        links: [{ label: "BLNM package (GitHub)", href: "https://github.com/PejLab/blnm" }],
+      },
+      {
+        title: "DNAnexus Applets for UK Biobank (UKBB)",
+        role: "Research Assistant",
+        dates: "Jun 2025 – Sep 2025",
+        supervisors: ["Prof. Ting Ye & CHRU"],
+        img: "/assets/projects/ukbb.png",
+        description: [
+          "Built a Proteomics applet enabling one-command analyses (linear/logistic, LMM, GEE, Cox) with containerized reproducibility.",
+          "Configured a cardiac MRI segmentation workflow with clear I/O mapping and consistent Docker/runtime setup.",
+        ],
+      },
+      {
+        title: "Frontier LLM Evaluation for Clinical Trial Development Tasks (Thesis)",
+        role: "Research Assistant",
+        dates: "Aug 2025 – Present",
+        supervisors: ["Prof. Ting Ye"],
+        img: "/assets/projects/llm.png",
+        description: [
+          "Designed retrieval/summarization protocols for clinical trial tasks with metrics (retrieval AUC, calibration) + bootstrap CIs.",
+          "Built a reproducible benchmarking pipeline on standardized trial documents.",
+        ],
+      },
+      {
+        title: "Paid Family Leave and Abusive Head Trauma in 1-Year-Olds",
+        role: "Research Assistant",
+        dates: "Jun 2025 – Oct 2025",
+        supervisors: ["Prof. Ting Ye & Emily Georges, Seattle Children’s"],
+        img: "/assets/projects/pfl.png",
+        description: [
+          "Curated a 7-state panel; applied CS, BJS and TWFE with CR2 clustered SEs; verified pre-trends.",
+          "Compared estimators’ efficiency and robustness under sparsity; conducted CS aggregation (simple, group, dynamic).",
+        ],
+      },
+    ];
+
+    const IN_CLASS_PROJECTS = [
+      {
+        title: "Rats’ TNT Preference and Rater Reliability",
+        tag: "STAD94 — Statistics Project (Fall 2023)",
+        supervisors: ["Prof. Sohee Kang"],
+        img: "/assets/projects/rats.png",
+        description: [
+          "Applied PCA + linear modeling to denoise rater scores, revealing 78% learning gain across 32 videos.",
+        ],
+        reportLink: "/assets/reports/rats_tnt.pdf",
+      },
+      {
+        title: "Canadian Stock Price Dynamics",
+        tag: "STAD57 — Time Series Project (Fall 2023)",
+        supervisors: ["Prof. Sotirios Damouras"],
+        img: "/assets/projects/stocks.png",
+        description: [
+          "Modeled market returns with ARMA and simulation; uncovered short-term autocorrelation and a 7.8× gain over RW baselines.",
+        ],
+        reportLink: "/assets/reports/stocks.pdf",
+      },
+      {
+        title: "Seasonal Forecasting of Canadian CPI",
+        tag: "STAD57 — Time Series Project (Fall 2023)",
+        supervisors: ["Prof. Sotirios Damouras"],
+        img: "/assets/projects/cpi.png",
+        description: [
+          "Built SARIMA(0,1,1)(0,1,1)[12]; reduced 1-step forecast error vs 9-step predictions.",
+        ],
+        reportLink: "/assets/reports/cpi.pdf",
+      },
+      {
+        title: "Gas Furnace Process Modeling",
+        tag: "STAD57 — Time Series Project (Fall 2023)",
+        supervisors: ["Prof. Sotirios Damouras"],
+        img: "/assets/projects/furnace.png",
+        description: [
+          "ARIMA + transfer-function model capturing a 5-period feed lag; halved residual variance.",
+        ],
+        reportLink: "/assets/reports/furnace.pdf",
+      },
+      {
+        title: "Survival Analysis of Cancer Patients",
+        tag: "STAD92 — Survival Analysis (Summer 2023)",
+        supervisors: ["Prof. Shahriar Shams"],
+        img: "/assets/projects/survival.png",
+        description: [
+          "Constructed KM and Cox PH models showing ulcer cohort elevated risk.",
+        ],
+        reportLink: "/assets/reports/survival.pdf",
+      },
+      {
+        title: "Predicting Fire Severity in Toronto",
+        tag: "STAA57 — Data Science (Spring 2023)",
+        supervisors: ["Prof. Shahriar Shams"],
+        img: "/assets/projects/fire.png",
+        description: [
+          "Logistic regression with CV (AUC ≈ 0.82) on 6k incidents; sprinkler/alarm failures as key predictors.",
+        ],
+        reportLink: "/assets/reports/fire.pdf",
+      },
+    ];
+
+    function SectionTitle({ id, children }) {
+      return <h2 id={id} className="text-2xl md:text-3xl font-semibold tracking-tight mt-16 mb-6">{children}</h2>;
+    }
+
+    function Modal({ open, onClose, children }) {
+      if (!open) return null;
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+          <div className="relative max-h-[85vh] w-[min(980px,94vw)] overflow-y-auto rounded-2xl bg-white text-zinc-900 p-6 md:p-8 shadow-xl">
+            <button onClick={onClose} className="absolute right-3 top-3 rounded-full border px-3 py-1 text-sm">Close</button>
+            {children}
+          </div>
+        </div>
+      );
+    }
+
+    function Card({ title, img, onClick }) {
+      return (
+        <button onClick={onClick} className="group relative w-full overflow-hidden rounded-2xl shadow hover:shadow-lg transition p-0 text-left">
+          {img ? <img src={img} alt={title} className="h-44 w-full object-cover" /> : <div className="h-44 w-full bg-pink-200/40" />}
+          <div className="p-4">
+            <div className="text-base md:text-lg font-medium">{title}</div>
+          </div>
+          <div className="absolute inset-0 ring-1 ring-black/5 rounded-2xl pointer-events-none" />
+        </button>
+      );
+    }
+
+    function ProjectGrid({ items, type }) {
+      const [openIdx, setOpenIdx] = React.useState(null);
+      return (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {items.map((p, i) => (
+              <Card key={i} title={p.title} img={p.img} onClick={() => setOpenIdx(i)} />
+            ))}
+          </div>
+
+          <Modal open={openIdx !== null} onClose={() => setOpenIdx(null)}>
+            {openIdx !== null && (
+              <div>
+                <h3 className="text-xl md:text-2xl font-semibold">{items[openIdx].title}</h3>
+                <div className="mt-1 text-sm opacity-80">
+                  {[items[openIdx].role, items[openIdx].tag, items[openIdx].dates].filter(Boolean).join(" • ")}
+                </div>
+                {items[openIdx].supervisors?.length ? (
+                  <div className="mt-3 text-sm">
+                    <span className="font-medium">Supervisors: </span>
+                    {items[openIdx].supervisors.join(", ")}
+                  </div>
+                ) : null}
+                <ul className="mt-4 space-y-2 list-disc pl-5">
+                  {items[openIdx].description?.map((d, j) => <li key={j}>{d}</li>)}
+                </ul>
+                {items[openIdx].links?.length ? (
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {items[openIdx].links.map((lnk, k) => (
+                      <a key={k} href={lnk.href} target="_blank" rel="noreferrer"
+                         className="inline-flex items-center rounded-full border px-3 py-1 text-sm hover:bg-zinc-50">
+                        {lnk.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+                {type === "class" && (
+                  <div className="mt-6 p-4 rounded-xl bg-pink-50/70 border">
+                    <div className="text-sm font-medium mb-1">Report PDF</div>
+                    <p className="text-sm opacity-80">
+                      Click below to open the report in a new tab.
+                    </p>
+                    {items[openIdx].reportLink ? (
+                      <a href={items[openIdx].reportLink} target="_blank" rel="noreferrer"
+                         className="mt-3 inline-flex items-center rounded-full border px-3 py-1 text-sm hover:bg-zinc-50">
+                        Open PDF Report
+                      </a>
+                    ) : <div className="mt-3 text-sm opacity-70">No report linked yet.</div>}
+                  </div>
+                )}
+              </div>
+            )}
+          </Modal>
+        </>
+      );
+    }
+
+    function Page() {
+      return (
+        <main>
+          {/* top spacer */}
+          <div className="h-10 md:h-16"></div>
+
+          {/* header/profile */}
+          <header className="mx-auto max-w-5xl px-4 md:px-6">
+            <div className="flex flex-col items-center text-center">
+              <img src={PERSONAL.headshot} alt="Profile"
+                   className="h-32 w-32 rounded-full ring-4 ring-acc shadow-lg object-cover" />
+              <h1 className="mt-4 text-3xl md:text-4xl font-bold">{PERSONAL.name}</h1>
+              <p className="mt-2 text-sm md:text-base opacity-90">
+                <a className="underline decoration-acc underline-offset-2" href={`mailto:${PERSONAL.email}`}>{PERSONAL.email}</a>
+                {" • "}
+                <span>{PERSONAL.phone}</span>
+                {" • "}
+                <span>{PERSONAL.location}</span>
+                {" • "}
+                <a className="underline decoration-acc underline-offset-2" href={PERSONAL.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+              </p>
+            </div>
+          </header>
+
+          <div className="mx-auto max-w-5xl px-4 md:px-6 pb-24">
+            <SectionTitle id="personal">Personal Information</SectionTitle>
+            <div className="rounded-2xl bg-white/70 p-5 shadow">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm md:text-base">
+                <li><span className="font-medium">Email:</span> {PERSONAL.email}</li>
+                <li><span className="font-medium">Phone:</span> {PERSONAL.phone}</li>
+                <li><span className="font-medium">Location:</span> {PERSONAL.location}</li>
+                <li><span className="font-medium">LinkedIn:</span> <a className="underline decoration-acc underline-offset-2" href={PERSONAL.linkedin} target="_blank" rel="noreferrer">{PERSONAL.linkedin}</a></li>
+              </ul>
+            </div>
+
+            <SectionTitle id="education">Education</SectionTitle>
+            <div className="space-y-4">
+              {EDUCATION.map((e, i) => (
+                <div key={i} className="rounded-2xl bg-white/70 p-5 shadow">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="text-lg font-semibold">{e.school}</div>
+                    <div className="text-sm opacity-80">{e.dates}</div>
+                  </div>
+                  <div className="mt-1 text-sm">{e.degree}</div>
+                  <div className="text-sm opacity-80">{e.gpa}</div>
+                  {e.coursework?.length ? (
+                    <div className="mt-3 text-sm">
+                      <span className="font-medium">Selected Coursework:</span> {e.coursework.join(", ")}
+                    </div>
+                  ) : null}
+                  {e.honors?.length ? (
+                    <div className="mt-2 text-sm">
+                      <span className="font-medium">Honors:</span> {e.honors.join("; ")}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+
+            <SectionTitle id="working-papers">Working Papers</SectionTitle>
+            <div className="space-y-4">
+              {WORKING_PAPERS.map((w, i) => (
+                <div key={i} className="rounded-2xl bg-white/70 p-5 shadow">
+                  <div className="text-base md:text-lg font-semibold">{w.title}</div>
+                  <div className="text-sm opacity-80 mt-0.5">{w.authors}</div>
+                  <div className="text-sm opacity-80">{w.note}</div>
+                  <p className="mt-2 text-sm leading-relaxed">{w.blurb}</p>
+                </div>
+              ))}
+            </div>
+
+            <SectionTitle id="research-projects">Research Projects</SectionTitle>
+            <ProjectGrid items={RESEARCH_PROJECTS} type="research" />
+
+            <SectionTitle id="in-class-projects">Selected In-Class Projects</SectionTitle>
+            <ProjectGrid items={IN_CLASS_PROJECTS} type="class" />
+          </div>
+
+          <footer className="border-t border-white/40 py-8 text-center text-xs opacity-70">
+            <div>© {new Date().getFullYear()} {PERSONAL.name}</div>
+          </footer>
+        </main>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+  </script>
+</body>
+</html>
